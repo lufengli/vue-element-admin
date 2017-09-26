@@ -84,10 +84,15 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.$store.dispatch('LoginByUsername', this.loginForm).then(() => {
+          this.$store.dispatch('LoginByUsername', this.loginForm).then((req) => {
             this.loading = false
-            this.$router.push({ path: '/' })
-                // this.showDialog = true
+            console.log(req)
+            if (req.success) {
+              this.$router.push({ path: '/' })
+            } else {
+              this.$message({ message: req.msg, type: 'error' })
+            }
+            // this.showDialog = true
           }).catch(() => {
             this.loading = false
           })
