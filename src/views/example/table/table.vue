@@ -27,56 +27,92 @@
 
     <el-table :key='tableKey' :data="list" v-loading="listLoading" element-loading-text="给我一点时间" border fit highlight-current-row style="width: 100%">
 
-      <el-table-column align="center" label="序号" width="65">
+      <el-table-column align="center" label="序号" width="200px">
         <template scope="scope">
           <span>{{scope.row.id}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="180px" align="center" label="时间">
+      <el-table-column align="center" label="登录名" width="180px">
         <template scope="scope">
-          <span>{{scope.row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span>{{scope.row.username}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column min-width="300px" label="标题">
+      <el-table-column align="center" label="邮箱" width="200px">
         <template scope="scope">
-          <span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.title}}</span>
-          <el-tag>{{scope.row.type | typeFilter}}</el-tag>
+          <span>{{scope.row.email}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="110px" align="center" label="作者">
+      <el-table-column align="center" label="手机号" width="150px">
         <template scope="scope">
-          <span>{{scope.row.author}}</span>
+          <span>{{scope.row.mobile}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="110px" v-if='showAuditor' align="center" label="审核人">
+      <el-table-column align="center" label="状态" width="150px">
         <template scope="scope">
-          <span style='color:red;'>{{scope.row.auditor}}</span>
+          <span>{{scope.row.status}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column width="80px" label="重要性">
+      <el-table-column align="center" label="创建时间" width="150px">
         <template scope="scope">
-          <icon-svg v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n"></icon-svg>
+          <span>{{scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="阅读数" width="95">
+      <el-table-column align="center" label="更新时间" width="150px">
         <template scope="scope">
-          <span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>
+          <span>{{scope.row.updateTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column class-name="status-col" label="状态" width="90">
-        <template scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>
-        </template>
-      </el-table-column>
+      <!--<el-table-column width="180px" align="center" label="时间">-->
+        <!--<template scope="scope">-->
+          <!--<span>{{scope.row.username | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
 
-      <el-table-column align="center" label="操作" width="150">
+      <!--<el-table-column min-width="300px" label="标题">-->
+        <!--<template scope="scope">-->
+          <!--<span class="link-type" @click="handleUpdate(scope.row)">{{scope.row.title}}</span>-->
+          <!--<el-tag>{{scope.row.type | typeFilter}}</el-tag>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--<el-table-column width="110px" align="center" label="作者">-->
+        <!--<template scope="scope">-->
+          <!--<span>{{scope.row.author}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--<el-table-column width="110px" v-if='showAuditor' align="center" label="审核人">-->
+        <!--<template scope="scope">-->
+          <!--<span style='color:red;'>{{scope.row.auditor}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--<el-table-column width="80px" label="重要性">-->
+        <!--<template scope="scope">-->
+          <!--<icon-svg v-for="n in +scope.row.importance" icon-class="star" class="meta-item__icon" :key="n"></icon-svg>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--<el-table-column align="center" label="阅读数" width="95">-->
+        <!--<template scope="scope">-->
+          <!--<span class="link-type" @click='handleFetchPv(scope.row.pageviews)'>{{scope.row.pageviews}}</span>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <!--<el-table-column class-name="status-col" label="状态" width="90">-->
+        <!--<template scope="scope">-->
+          <!--<el-tag :type="scope.row.status | statusFilter">{{scope.row.status}}</el-tag>-->
+        <!--</template>-->
+      <!--</el-table-column>-->
+
+      <el-table-column align="center" label="操作" width="250px">
         <template scope="scope">
           <el-button v-if="scope.row.status!='published'" size="small" type="success" @click="handleModifyStatus(scope.row,'published')">发布
           </el-button>
@@ -112,7 +148,7 @@
         </el-form-item>
 
         <el-form-item label="时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="选择日期时间">
+          <el-date-picker v-model="temp.username" type="datetime" placeholder="选择日期时间">
           </el-date-picker>
         </el-form-item>
 
@@ -189,7 +225,7 @@ export default {
         id: undefined,
         importance: 0,
         remark: '',
-        timestamp: 0,
+        username: 0,
         title: '',
         type: '',
         status: 'published'
@@ -230,8 +266,11 @@ export default {
     getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        console.log('query---------')
+        console.log(this.listQuery)
+        console.log(response.data.data.records)
+        this.list = response.data.data.records
+        this.total = response.data.data.total
         this.listLoading = false
       })
     },
@@ -285,7 +324,7 @@ export default {
     },
     create() {
       this.temp.id = parseInt(Math.random() * 100) + 1024
-      this.temp.timestamp = +new Date()
+      this.temp.username = +new Date()
       this.temp.author = '原创作者'
       this.list.unshift(this.temp)
       this.dialogFormVisible = false
@@ -297,7 +336,7 @@ export default {
       })
     },
     update() {
-      this.temp.timestamp = +this.temp.timestamp
+      this.temp.username = +this.temp.username
       for (const v of this.list) {
         if (v.id === this.temp.id) {
           const index = this.list.indexOf(v)
@@ -318,7 +357,7 @@ export default {
         id: undefined,
         importance: 0,
         remark: '',
-        timestamp: 0,
+        username: 0,
         title: '',
         status: 'published',
         type: ''
@@ -334,14 +373,14 @@ export default {
       require.ensure([], () => {
         const { export_json_to_excel } = require('vendor/Export2Excel')
         const tHeader = ['时间', '地区', '类型', '标题', '重要性']
-        const filterVal = ['timestamp', 'province', 'type', 'title', 'importance']
+        const filterVal = ['username', 'province', 'type', 'title', 'importance']
         const data = this.formatJson(filterVal, this.list)
         export_json_to_excel(tHeader, data, 'table数据')
       })
     },
     formatJson(filterVal, jsonData) {
       return jsonData.map(v => filterVal.map(j => {
-        if (j === 'timestamp') {
+        if (j === 'username') {
           return parseTime(v[j])
         } else {
           return v[j]
