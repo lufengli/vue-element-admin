@@ -71,11 +71,11 @@ const user = {
         getUserInfo(state.token).then(response => {
           const data = response.data
           console.log(data)
-          commit('SET_ROLES', ['admin'])
-          commit('SET_NAME', data.data.username)
-          commit('SET_AVATAR', 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif')
-          commit('SET_INTRODUCTION', '我是超级管理员')
-          resolve(response)
+          commit('SET_ROLES', data.data.role)
+          commit('SET_NAME', data.data.name)
+          commit('SET_AVATAR', data.data.avatar)
+          commit('SET_INTRODUCTION', data.data.introduction)
+          resolve(data)
         }).catch(error => {
           reject(error)
         })

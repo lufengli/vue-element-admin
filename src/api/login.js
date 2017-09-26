@@ -21,7 +21,7 @@ export function logout() {
 
 export function getUserInfo(token) {
   return fetch({
-    url: '/sysUser/getSysUser',
+    url: '/getUserInfo',
     method: 'get',
     params: { token }
   })
