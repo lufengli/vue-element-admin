@@ -57,15 +57,15 @@
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="创建时间" width="150px">
+      <el-table-column align="center" label="创建时间" width="200px">
         <template scope="scope">
-          <span>{{scope.row.createTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span>{{scope.row.createTime}}</span>
         </template>
       </el-table-column>
 
-      <el-table-column align="center" label="更新时间" width="150px">
+      <el-table-column align="center" label="更新时间" width="200px">
         <template scope="scope">
-          <span>{{scope.row.updateTime | parseTime('{y}-{m}-{d} {h}:{i}')}}</span>
+          <span>{{scope.row.updateTime}}</span>
         </template>
       </el-table-column>
 
