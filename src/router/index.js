@@ -46,6 +46,20 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
+    path: '/sys',
+    component: Layout,
+    redirect: '/sys/user',
+    name: '系统管理',
+    icon: 'component',
+    children: [
+      { path: 'user', component: _import('sys/user'), name: '用户管理' },
+      { path: 'role', component: _import('sys/role'), name: '角色管理' },
+      { path: 'menu', component: _import('sys/menu'), name: '菜单管理' },
+      { path: 'msg', component: _import('sys/msg'), name: '消息管理' },
+      { path: 'param', component: _import('sys/param'), name: '参数管理' }
+    ]
+  },
+  {
     path: '/permission',
     component: Layout,
     redirect: '/permission/index',
