@@ -15,3 +15,11 @@ export function getSysUsers(query) {
     params: query
   })
 }
+
+export function addSysUser(userInfo) {
+  return fetch({
+    url: '/sysUser/addSysUser',
+    method: 'post',
+    params: userInfo
+  })
+}

@@ -134,7 +134,8 @@
 </style>
 
 <script>
-  import { getSysUsers } from '@/api/user'
+  import { getSysUsers, addSysUser } from '@/api/user'
+  import { Message } from 'element-ui'
   export default {
     data() {
       return {
@@ -217,7 +218,28 @@
       submitAddForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!')
+            // alert(this.ruleForm.email)
+            addSysUser(this.ruleForm).then(response => {
+              if (response.data.success) {
+                Message({
+                  message: '新增用户成功！',
+                  type: 'success'
+                })
+                this.dialogFormVisible = false
+                this.listQuery.page = 1
+                this.listQuery.username = this.formInline.username === '' ? null : this.formInline.username
+                this.listQuery.mobile = this.formInline.mobile === '' ? null : this.formInline.mobile
+                this.listQuery.email = this.formInline.email === '' ? null : this.formInline.email
+                this.listQuery.status = this.formInline.status === '' ? null : this.formInline.status
+                console.log(this.formInline)
+                this.getList()
+              } else {
+                Message({
+                  message: '新增用户失败！',
+                  type: 'error'
+                })
+              }
+            })
           } else {
             console.log('error submit!!')
             return false
