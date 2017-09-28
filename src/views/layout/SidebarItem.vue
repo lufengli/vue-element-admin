@@ -1,5 +1,6 @@
 <template>
   <div class='menu-wrapper'>
+    <!--<div style="height:50px;text-align: center;padding: 20px;">xxxx系统</div>-->
     <template v-for="item in routes">
 
       <router-link v-if="!item.hidden&&item.noDropdown&&item.children.length>0" :to="item.path+'/'+item.children[0].path">
