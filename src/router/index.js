@@ -56,7 +56,8 @@ export const asyncRouterMap = [
       { path: 'role', component: _import('sys/role'), name: '角色管理' },
       { path: 'menu', component: _import('sys/menu'), name: '菜单管理' },
       { path: 'msg', component: _import('sys/msg'), name: '消息管理' },
-      { path: 'param', component: _import('sys/param'), name: '参数管理' }
+      { path: 'param', component: _import('sys/param'), name: '参数管理' },
+      { path: 'sysLog', component: _import('sys/log'), name: '系统日志' }
     ]
   },
   {

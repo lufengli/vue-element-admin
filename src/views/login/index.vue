@@ -39,6 +39,7 @@
 <script>
 import { isvalidUsername } from '@/utils/validate'
 import socialSign from './socialsignin'
+import { Message } from 'element-ui'
 
 export default {
   components: { socialSign },
@@ -90,7 +91,10 @@ export default {
             if (req.success) {
               this.$router.push({ path: '/' })
             } else {
-              this.$message({ message: req.msg, type: 'error' })
+              Message({
+                message: req.msg,
+                type: 'error'
+              })
             }
             // this.showDialog = true
           }).catch(() => {

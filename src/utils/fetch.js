@@ -45,6 +45,7 @@ service.interceptors.response.use(response => {
           location.reload() // 为了重新实例化vue-router对象 避免bug
         })
       })
+      return Promise.reject('error')
     } else if (response.data.code === 10001 || response.data.code === 10002 || response.data.code === 10003 || response.data.code === 11001) {
       store.dispatch('FedLogOut').then(() => {
         location.reload() // 为了重新实例化vue-router对象 避免bug
@@ -54,8 +55,8 @@ service.interceptors.response.use(response => {
         type: 'error',
         duration: 10 * 1000
       })
+      return Promise.reject('error')
     }
-    return Promise.reject('error')
   }
   return response
 }, error => {
