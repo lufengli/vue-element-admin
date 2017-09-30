@@ -49,7 +49,7 @@
                 <span>{{ props.row.param }}</span>
               </el-form-item>
               <el-form-item label="操作类型">
-                <span>{{ props.row.type }}</span>
+                <span>{{ props.row.logType }}</span>
               </el-form-item>
               <el-form-item label="内容">
                 <span>{{ props.row.content }}</span>
@@ -73,7 +73,7 @@
         </el-table-column>
         <el-table-column
           label="操作类型"
-          prop="type">
+          prop="logType">
         </el-table-column>
         <el-table-column
           label="内容"
@@ -128,7 +128,7 @@
         userInfo: null,
         listQuery: {
           page: 1,
-          limit: 20,
+          limit: 10,
           username: null,
           email: null,
           mobile: null,

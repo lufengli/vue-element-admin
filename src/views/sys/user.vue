@@ -142,7 +142,7 @@
         userInfo: null,
         listQuery: {
           page: 1,
-          limit: 20,
+          limit: 10,
           username: null,
           email: null,
           mobile: null,
