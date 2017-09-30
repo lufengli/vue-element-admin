@@ -2,14 +2,21 @@
   <div class="wrapper">
     <div>
       <el-form :inline="true" :model="formInline" ref="formInline" class="demo-form-inline">
-        <el-form-item label="登录名">
-          <el-input v-model="formInline.username" placeholder="登录名"></el-input>
+        <el-form-item label="用户ID">
+          <el-input v-model="formInline.userId" placeholder="用户ID"></el-input>
         </el-form-item>
-        <el-form-item label="手机号">
-          <el-input v-model="formInline.mobile" placeholder="手机号"></el-input>
+        <el-form-item label="操作类型">
+          <el-select v-model="formInline.type" placeholder="操作类型">
+            <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value">
+            </el-option>
+          </el-select>
         </el-form-item>
-        <el-form-item label="邮箱">
-          <el-input v-model="formInline.email" placeholder="邮箱"></el-input>
+        <el-form-item label="终端类型">
+          <el-input v-model="formInline.terminalType" placeholder="终端类型"></el-input>
         </el-form-item>
         <el-form-item label="状态">
           <el-select v-model="formInline.status" placeholder="状态">
@@ -121,7 +128,7 @@
 </style>
 
 <script>
-  import { getLogInfo } from '@/api/sysLog'
+  import { getLogInfo, getLogType } from '@/api/sysLog'
   export default {
     data() {
       return {
@@ -129,46 +136,26 @@
         listQuery: {
           page: 1,
           limit: 10,
-          username: null,
-          email: null,
-          mobile: null,
+          userId: null,
+          type: null,
+          terminalType: null,
           status: null
         },
         total: null,
         currentPage: null,
         formInline: {
-          username: null,
-          mobile: null,
-          email: null,
+          userId: null,
+          type: null,
+          terminalType: null,
           status: null
         },
         dialogFormVisible: false,
-        ruleForm: {
-          username: '',
-          email: '',
-          mobile: '',
-          status: ''
-        },
-        rules: {
-          username: [
-            { required: true, message: '请输入登录名', trigger: 'blur' },
-            { min: 6, max: 30, message: '长度在 6 到 30 个字符', trigger: 'blur' }
-          ],
-          status: [
-            { required: true, message: '请选择状态', trigger: 'change' }
-          ],
-          email: [
-            { required: true, message: '请填写正确的邮箱地址', trigger: 'blur' }
-          ],
-          mobile: [
-            { required: true, message: '请填写正确的手机号', trigger: 'blur' },
-            { min: 11, max: 11, message: '请填写正确的11位手机号', trigger: 'blur' }
-          ]
-        }
+        options: null
       }
     },
     created() {
       this.getList()
+      this.getType()
     },
     methods: {
       getList() {
@@ -179,6 +166,11 @@
           this.userInfo = response.data.data.records
           this.total = response.data.data.total
           this.currentPage = response.data.data.current
+        })
+      },
+      getType() {
+        getLogType().then(response => {
+          this.options = response.data.data
         })
       },
       handleSizeChange(val) {
@@ -194,9 +186,9 @@
       submitSelectForm() {
         console.log('submit!')
         this.listQuery.page = 1
-        this.listQuery.username = this.formInline.username === '' ? null : this.formInline.username
-        this.listQuery.mobile = this.formInline.mobile === '' ? null : this.formInline.mobile
-        this.listQuery.email = this.formInline.email === '' ? null : this.formInline.email
+        this.listQuery.userId = this.formInline.userId === '' ? null : this.formInline.userId
+        this.listQuery.type = this.formInline.type === '' ? null : this.formInline.type
+        this.listQuery.terminalType = this.formInline.terminalType === '' ? null : this.formInline.terminalType
         this.listQuery.status = this.formInline.status === '' ? null : this.formInline.status
         console.log(this.formInline)
         this.getList()

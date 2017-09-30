@@ -25,8 +25,13 @@
     </div>
     <div>
       <el-table
-        :data="userInfo"
+        :data="userInfo" stripe="true" :row-class-name="tableRowClassName"
+        highlight-current-row @current-change="handleCurrentChange"
         style="width: 100%">
+        <el-table-column
+          type="index"
+          width="50">
+        </el-table-column>
         <el-table-column type="expand">
           <template scope="props">
             <el-form label-position="left" inline class="demo-table-expand">
@@ -41,6 +46,9 @@
               </el-form-item>
               <el-form-item label="邮箱">
                 <span>{{ props.row.email }}</span>
+              </el-form-item>
+              <el-form-item label="状态">
+                <span>{{ props.row.status | statusStr }}</span>
               </el-form-item>
               <el-form-item label="创建时间">
                 <span>{{ props.row.createTime }}</span>
@@ -131,6 +139,13 @@
   .wrapper {
     margin: 5px 5px 5px 5px;
   }
+  .el-table .info-row {
+    background: #c9e5f5;
+  }
+
+  .el-table .positive-row {
+    background: #e2f0e4;
+  }
 </style>
 
 <script>
@@ -161,7 +176,7 @@
           username: '',
           email: '',
           mobile: '',
-          status: ''
+          status: '启用'
         },
         rules: {
           username: [
@@ -179,6 +194,11 @@
             { min: 11, max: 11, message: '请填写正确的11位手机号', trigger: 'blur' }
           ]
         }
+      }
+    },
+    filters: {
+      statusStr: function(value) {
+        return value === true ? '启用' : '禁用'
       }
     },
     created() {
@@ -248,6 +268,15 @@
       },
       resetAddForm(formName) {
         this.$refs[formName].resetFields()
+      },
+      tableRowClassName(row, index) {
+        if (!row.status) {
+          return 'info-row'
+        }
+        return ''
+      },
+      handleCurrentChange(val) {
+        this.currentRow = val;
       }
     }
   }
